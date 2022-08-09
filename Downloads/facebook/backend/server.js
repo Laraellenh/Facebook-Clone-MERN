@@ -2,38 +2,12 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-// practice with securing  CORS
-// const options = {
-//   origin: "http://localhost:3000",
-//   useSuccessStatus: 200,
-// }
-// let allowed = ["http://localhost:3000"];
-// function options(req, res){
-//   let tmp;
-//   let origin= req.header("Origin");
-//   if(allowed.indexOf(origin)> -1){
-//     tmp={
-//       origin: true,
-//       optionSuccessStatus: 200,
-//     };
-//   } else {
-//     tmp={
-//       origin: "stupid",
-//     };
-//   }
-//   res(null, tmp);
-// }
-// app.use(cors(options));
-// create the endpoints
-// less secure CORS for this project
+const {readdirSync} = require("fs");
 app.use(cors());
-app.get("/", (req, res) => {
-  res.send("welcome from home");
-});
-app.get("/books", (req, res) => {
-  res.send("welcome to books");
-});
-// listen on port 8000
+// synchronously read the contents of a directory in node The method returns an array with all the file names or objects in the directory. The options argument can be used to change the format in which the files are returned from the method.
+// Syntax:fs.readdirSync( path, options )
+// dynamically add routes by mapping the array our routes!
+readdirSync("./routes").map((r) => app.use("/", require("./routes/"+r)));
 app.listen(8000, () => {
   console.log("server is listening...");
 });
