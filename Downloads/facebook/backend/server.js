@@ -1,6 +1,7 @@
 // import express and make it  a function
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const app = express();
 const {readdirSync} = require("fs");
 const dotenv = require("dotenv");
@@ -12,7 +13,13 @@ const PORT = process.env.PORT || 8000;
 // Syntax:fs.readdirSync( path, options )
 // dynamically add routes by mapping the array our routes!
 
-
+//db
+mongoose
+.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+})
+.then(() => console.log("db connected"))
+.catch((err) => console.log("error connecting to mongodb", err));
 app.listen(PORT, () => {
   console.log(`server is on port ${PORT}`);
 });
