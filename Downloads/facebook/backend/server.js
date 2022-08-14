@@ -7,6 +7,7 @@ const {readdirSync} = require("fs");
 const dotenv = require("dotenv");
 dotenv.config();
 app.use(cors());
+app.use(express.json());
 // routes
 readdirSync("./routes").map((r) => app.use("/", require("./routes/"+r)));
 const PORT = process.env.PORT || 8000;
